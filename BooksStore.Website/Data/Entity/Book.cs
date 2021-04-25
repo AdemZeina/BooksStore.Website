@@ -20,9 +20,10 @@ namespace BooksStore.Website.Data.Entity
         public int TagId { get; set; }
         public Tag Tag { get; set; }
         
-        [ForeignKey("CreatedUser")]
-        public int CreatedUserId { get; set; }
-        public User CreatedUser { get; set; }
+        //[ForeignKey("CreatedUser")]
+        public Guid CreatedUserId { get; set; }
+        [ForeignKey("CreatedUserId")]
+        public ApplicationUser CreatedUser { get; set; }
 
         public List<FavoriteBook> FavoriteBooks { get; set; }
     }

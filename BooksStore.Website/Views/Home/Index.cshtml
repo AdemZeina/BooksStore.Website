@@ -1,8 +1,24 @@
-﻿@{
+﻿@model IEnumerable<BooksStore.Website.Data.Entity.Book>
+@{
     ViewData["Title"] = "Home Page";
-}
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+}
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4" style="padding:20px">
+                <div class="card shadow">
+                    <img src="~/Upload/Images/@item.ImageUrl" style="width: auto; height: 300px; object-fit: fill; " class="card-img-top" alt="...">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">@item.Title</h5>
+                        <p class="card-text">@item.Description</p>
+                        <a href="#" class="btn btn-success">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
 </div>

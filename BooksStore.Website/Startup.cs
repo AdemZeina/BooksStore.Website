@@ -10,6 +10,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Spice.Service;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using BooksStore.Website.Data.Entity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace BooksStore.Website
 {
@@ -30,8 +35,13 @@ namespace BooksStore.Website
             services.AddDbContext<BooksDbContext>(options => options.UseSqlServer(
                Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<BooksDbContext>()
+                .AddDefaultTokenProviders()
+                ;
 
             services.AddRazorPages().AddRazorRuntimeCompilation();
+            services.AddRazorPages();
 
             services.AddControllersWithViews();
         }
@@ -55,7 +65,7 @@ namespace BooksStore.Website
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseAuthentication();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -66,6 +76,8 @@ namespace BooksStore.Website
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
+
             });
         }
     }

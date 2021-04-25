@@ -1,0 +1,166 @@
+﻿@model Book
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<br />
+<h2 class="text-info">Edit Book</h2>
+<br />
+<form enctype="multipart/form-data" id="frmUplaodFileAdd" class="sky-form col-md-pull-8" hidden>
+    @Html.AntiForgeryToken()
+    <input id="file2" name="file" type="file" />
+</form>
+<form asp-action="Edit" method="post">
+    <div class="whiteBackground border">
+        @if (Model.ImageUrl != null)
+        {
+            <img style="width:50%;height:50%;border-radius:5px;" src="~/Upload/Images/@Model.ImageUrl" />
+            <br />
+            <br />
+        }
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @Html.HiddenFor(m => m.Id)
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="ImageUrl" class="col-form-label">Picture:</label>
+            </div>
+            <div class="col-5">
+                <a class="btn-more hover-effect" id="upload_link" href="#" style="font-size:medium;font-weight:600">&nbsp; Choose Picture  &nbsp;</a>
+                <input asp-for="ImageUrl" class="image-name form-control" readonly />
+                <label class="col-md-2 control-label" id="txtuploadedMsgAdd" style="color: chartreuse;font-weight:600;text-align:left"></label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Title" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Title" class="form-control" />
+                <span class="text-danger" asp-validation-for="Title"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Description" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Description" class="form-control" />
+                <span class="text-danger" asp-validation-for="Description"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Content" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Content" class="form-control" />
+                <span class="text-danger" asp-validation-for="Content"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Price" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Price" class="form-control" />
+                <span class="text-danger" asp-validation-for="Price"></span>
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Author" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Author" class="form-control" />
+                <span class="text-danger" asp-validation-for="Author"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="CreatedAt" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="CreatedAt" class="form-control" />
+                <span class="text-danger" asp-validation-for="CreatedAt"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-5 offset-2">
+                <partial name="_UpdateAndBackToListButtonsPartial" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".image").on("change", function () {
+                alert();
+                var fileName = $(this).val().split("\\").pop();
+                $(this).next(".image").html(fileName);
+
+
+            })
+        });
+
+        $(function () {
+            $("#upload_link").on('click', function (e) {
+                e.preventDefault();
+                debugger;
+                $("#file2:hidden").trigger('click');
+            });
+        });
+        $("#file2").change(function () {
+            var file = this.files[0];
+            fileName = file.name;
+            size = file.size;
+            type = file.type;
+            console.log("hereeee");
+            debugger;
+            var formData = new FormData($('#frmUplaodFileAdd')[0]);
+            $.ajax({
+                url: 'ImageUpload',  //Server script to process data
+                type: 'POST',
+
+                xhr: function () {  // Custom XMLHttpRequest
+                    var myXhr = $.ajaxSettings.xhr();
+                    if (myXhr.upload) { // Check if upload property exists
+                        myXhr.upload.addEventListener('progress',
+                            progressHandlingFunction, false); // For handling the progress of the upload
+                    }
+                    return myXhr;
+                },
+                data: formData,
+                success: function (response) {
+                    console.log(response);
+                    $(".image-name").val(response);
+                    //$("#image").attr("src", "data:image/png;base64," + response.Image); $("#image").attr("class", "img-responsive");
+                },
+                //Options to tell jQuery not to process data or worry about content-type.
+                cache: true,
+                contentType: false,
+                processData: false
+            });
+        });
+
+        //If file is successfully uploaded, label is updated with message
+        function progressHandlingFunction(e) {
+            if (e.lengthComputable) {
+                $("#divAddInforamtionDialog").show();
+                $("#txtuploadedMsgAdd").text("  " + fileName + "Uploading..");
+            }
+        };
+        function updateValue(id, value) {
+            // this gets called from the popup window and updates the field with a new value
+            var jqueryObjectByClass = $(".cke_dialog_ui_input_text")[1];
+            jqueryObjectByClass.value = value;
+        };
+
+    </script>
+}

@@ -13,8 +13,9 @@ namespace BooksStore.Website.Data.Entity
        
         public Book Book { get; set; }
 
-        [ForeignKey("User")]
-        public int UserId { get; set; }
-        public User User { get; set; }
+        //[ForeignKey("User")]
+        public Guid UserId { get; set; }
+        [ForeignKey("UserId")]
+        public ApplicationUser User { get; set; }
     }
 }

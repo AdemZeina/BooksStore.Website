@@ -4,14 +4,16 @@ using BooksStore.Website.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BooksStore.Website.Migrations
 {
     [DbContext(typeof(BooksDbContext))]
-    partial class BooksDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210424232612_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,22 +118,6 @@ namespace BooksStore.Website.Migrations
                     b.HasIndex("TagId");
 
                     b.ToTable("Books");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Author = "Bill Gates",
-                            Content = "C# Programming Guide, From A to Z Guid to program in c#",
-                            CreatedAt = new DateTime(2021, 4, 24, 23, 35, 23, 939, DateTimeKind.Utc).AddTicks(9905),
-                            CreatedUserId = new Guid("8e445865-a24d-4543-a6c6-9443d048cdb9"),
-                            Description = "From A to Z Guid to program in c#",
-                            ImageUrl = "",
-                            Price = 50.0,
-                            ReadCount = 1,
-                            TagId = 2,
-                            Title = "C# Programming Guide"
-                        });
                 });
 
             modelBuilder.Entity("BooksStore.Website.Data.Entity.FavoriteBook", b =>
@@ -175,23 +161,6 @@ namespace BooksStore.Website.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tags");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Science"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Technology"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Psycology"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -219,15 +188,6 @@ namespace BooksStore.Website.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "2c5e174e-3b0e-446f-86af-483d56fd7210",
-                            ConcurrencyStamp = "ca66449f-99b6-48f1-a217-ae57bf2ed673",
-                            Name = "Administrator",
-                            NormalizedName = "ADMINISTRATOR"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -317,23 +277,6 @@ namespace BooksStore.Website.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "1361a8e8-a83f-47b7-bd4d-34475c121b6b",
-                            Email = "admin@admin.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedUserName = "admin@admin.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJObSr6Oz7PemOYnNEI1ZwVL3cHrkcjGT5gDpVpI2k7/CHRn9Dv4KbRm1mebojP9WQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "14153ebb-9df1-472e-8ac9-a8005906751b",
-                            TwoFactorEnabled = false,
-                            UserName = "admin@admin.com"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -395,13 +338,6 @@ namespace BooksStore.Website.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                            RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7210"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

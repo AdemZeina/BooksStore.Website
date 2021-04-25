@@ -1,5 +1,7 @@
-﻿using BooksStore.Website.Models;
+﻿using BooksStore.Website.Data;
+using BooksStore.Website.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -12,15 +14,18 @@ namespace BooksStore.Website.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly BooksDbContext _db;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, BooksDbContext db)
         {
             _logger = logger;
+            _db = db;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var bookList = await _db.Books.ToListAsync();
+            return View(bookList);
         }
 
         public IActionResult Privacy()
