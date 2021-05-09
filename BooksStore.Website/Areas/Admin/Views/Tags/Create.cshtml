@@ -1,35 +1,49 @@
 ﻿@model Tag
 @{
+    ViewData["Page"] = "Tags";
     ViewData["Title"] = "Create";
 }
-<br />
-<h2 class="text-info">Create Tags</h2>
-<br />
-<form enctype="multipart/form-data" id="frmUplaodFileAdd" class="sky-form col-md-pull-8" hidden>
-    @Html.AntiForgeryToken()
-    <input id="file2" name="file" type="file" />
-</form>
 
-<form href="/Admin/Tags/Create" method="post" enctype="multipart/form-data">
-    <div class="whiteBackground border">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Name" class="col-form-label"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Name" class="form-control" />
-                <span class="text-danger" asp-validation-for="Name"></span>
-            </div>
+
+<div class="col-xl-12 col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <h5>Create A Book</h5>
         </div>
-        <div class="form-group row">
-            <div class="col-5 offset-2">
-                <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="card-block">
+            <div class="">
+                <form enctype="multipart/form-data" id="frmUplaodFileAdd" class="sky-form col-md-pull-8" hidden>
+                    @Html.AntiForgeryToken()
+                    <input id="file2" name="file" type="file" />
+                </form>
+                <form href="/Admin/Tags/Create" method="post" enctype="multipart/form-data">
+                    <div class="whiteBackground border">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                           <div class="form-group row">
+                            <div class="col-2">
+                                <label asp-for="Name" class="col-form-label"></label>
+                            </div>
+                            <div class="col-5">
+                                <input asp-for="Name" class="form-control" />
+                                <span class="text-danger" asp-validation-for="Name"></span>
+                            </div>
+                        </div>
+                       <div class="form-group row">
+                            <div class="col-5 offset-2">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</form>
+</div>
+
+
+
+
 
 
 

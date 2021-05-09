@@ -1,20 +1,24 @@
-﻿using BooksStore.Website.Data;
+﻿using BooksStore.Website.Areas.Admin.Models;
+using BooksStore.Website.Data;
 using BooksStore.Website.Data.Entity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 
 namespace BooksStore.Website.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class BooksController : Controller
+    [Authorize(Roles = "Administrator")]
+    public class BooksController : BaseController
     {
         private readonly BooksDbContext _db;
         private readonly IHostingEnvironment _hostingEnvironment;
@@ -28,12 +32,25 @@ namespace BooksStore.Website.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var books = await _db.Books.ToListAsync(); 
+            var books = await _db.Books.Include(x=>x.Tag).ToListAsync(); 
             return View(books);
         }
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View(new Book());
+            var tags = await _db.Tags.ToListAsync();
+            
+            List<SelectListItem> list = new List<SelectListItem>();
+
+            foreach (var tag in tags)
+            {
+                list.Add(new SelectListItem()
+                {
+                    Text = tag.Name.ToString(),
+                    Value = tag.Id.ToString()
+                });
+            }
+            var tagList = new SelectList(list, "Value", "Text");
+            return View(new CreateBookViewModel() { Tags = tagList }); ;
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -41,8 +58,9 @@ namespace BooksStore.Website.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                book.TagId = 1;
-                book.CreatedUserId = new Guid("8e445865-a24d-4543-a6c6-9443d048cdb9");
+               
+                book.CreatedUserId = "8e445865-a24d-4543-a6c6-9443d048cdb9";
+                book.CreatedAt = DateTime.UtcNow;
                 _db.Books.Add(book);
                 await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -56,24 +74,37 @@ namespace BooksStore.Website.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var books = await _db.Books.FindAsync(id);
-            if (books == null)
+            var book = await _db.Books.FindAsync(id);
+            if (book == null)
             {
                 return NotFound();
             }
-            return View(books);
+            var tags = await _db.Tags.ToListAsync();
+
+            List<SelectListItem> list = new List<SelectListItem>();
+
+            foreach (var tag in tags)
+            {
+                list.Add(new SelectListItem()
+                {
+                    Text = tag.Name.ToString(),
+                    Value = tag.Id.ToString()
+                });
+            }
+            var tagList = new SelectList(list, "Value", "Text");
+            return View(new CreateBookViewModel() { Tags = tagList,Book= book });
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Book  books)
+        public async Task<IActionResult> Edit(Book  book)
         {
             if (ModelState.IsValid)
             {
-                _db.Books.Update(books);
+                _db.Books.Update(book);
                 await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(books);
+            return View(book);
         }
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
@@ -134,6 +165,20 @@ namespace BooksStore.Website.Areas.Admin.Controllers
             }
 
             return Json(null);
+        }
+
+        public static System.Drawing.Image ScaleImage(System.Drawing.Image image, int height)
+        {
+            double ratio = (double)height / image.Height;
+            int newWidth = (int)(image.Width * ratio);
+            int newHeight = (int)(image.Height * ratio);
+            Bitmap newImage = new Bitmap(newWidth, newHeight);
+            using (Graphics g = Graphics.FromImage(newImage))
+            {
+                g.DrawImage(image, 0, 0, newWidth, newHeight);
+            }
+            image.Dispose();
+            return newImage;
         }
 
 

@@ -1,8 +1,9 @@
 ﻿using BooksStore.Website.Data;
 using BooksStore.Website.Data.Entity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using OpenTracing.Tag;
+using  OpenTracing.Tag;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,8 @@ using System.Threading.Tasks;
 namespace BooksStore.Website.Areas.Admin.Controllers
 {
     [Area("admin")]
-    public class TagsController : Controller
+    [Authorize(Roles = "Administrator")]
+    public class TagsController : BaseController
     {
         private readonly BooksDbContext _db;
 

@@ -21,7 +21,7 @@ namespace BooksStore.Website.Data.Entity
         public Tag Tag { get; set; }
         
         //[ForeignKey("CreatedUser")]
-        public Guid CreatedUserId { get; set; }
+        public string CreatedUserId { get; set; }
         [ForeignKey("CreatedUserId")]
         public ApplicationUser CreatedUser { get; set; }
 

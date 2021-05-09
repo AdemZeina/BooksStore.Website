@@ -1,88 +1,97 @@
 ﻿@model Book
 @{
+    ViewData["Page"] = "Books";
     ViewData["Title"] = "Delete";
 }
 
-<br />
-<h2 class="text-info">Delete News</h2>
-<br />
-<form asp-action="Delete" method="post">
-    <div class="whiteBackground border">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        @Html.HiddenFor(m => m.Id)
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Title" class="col-form-label"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Title" readonly class="form-control" />
-                <span class="text-danger" asp-validation-for="Title"></span>
-            </div>
+
+<div class="col-xl-12 col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <h5>Book Delete</h5>
         </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Description" class="col-form-label"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Description" readonly class="form-control" />
-                <span class="text-danger" asp-validation-for="Description"></span>
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Content" class="col-form-label"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Content" readonly class="form-control" />
-                <span class="text-danger" asp-validation-for="Content"></span>
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Price" class="col-form-label"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Price" readonly class="form-control" />
-                <span class="text-danger" asp-validation-for="Price"></span>
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Author" class="col-form-label"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Author" readonly class="form-control" />
-                <span class="text-danger" asp-validation-for="Author"></span>
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="ReadCount" class="col-form-label"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="ReadCount" readonly class="form-control" />
-                <span class="text-danger" asp-validation-for="ReadCount"></span>
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="CreatedAt" class="col-form-label"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="CreatedAt" readonly class="form-control" />
-                <span class="text-danger" asp-validation-for="CreatedAt"></span>
-            </div>
-        </div>
+        <div class="card-block">
+            <div class="">
+                <form asp-action="Delete" method="post">
+                    <div class="whiteBackground border">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        @Html.HiddenFor(m => m.Id)
+                        <div class="form-group row">
+                            <div class="col-2">
+                                <label asp-for="Title" class="col-form-label"></label>
+                            </div>
+                            <div class="col-5">
+                                <input asp-for="Title" readonly class="form-control" />
+                                <span class="text-danger" asp-validation-for="Title"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-2">
+                                <label asp-for="Description" class="col-form-label"></label>
+                            </div>
+                            <div class="col-5">
+                                <input asp-for="Description" readonly class="form-control" />
+                                <span class="text-danger" asp-validation-for="Description"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-2">
+                                <label asp-for="Content" class="col-form-label"></label>
+                            </div>
+                            <div class="col-5">
+                                <input asp-for="Content" readonly class="form-control" />
+                                <span class="text-danger" asp-validation-for="Content"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-2">
+                                <label asp-for="Price" class="col-form-label"></label>
+                            </div>
+                            <div class="col-5">
+                                <input asp-for="Price" readonly class="form-control" />
+                                <span class="text-danger" asp-validation-for="Price"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-2">
+                                <label asp-for="Author" class="col-form-label"></label>
+                            </div>
+                            <div class="col-5">
+                                <input asp-for="Author" readonly class="form-control" />
+                                <span class="text-danger" asp-validation-for="Author"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-2">
+                                <label asp-for="ReadCount" class="col-form-label"></label>
+                            </div>
+                            <div class="col-5">
+                                <input asp-for="ReadCount" readonly class="form-control" />
+                                <span class="text-danger" asp-validation-for="ReadCount"></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-2">
+                                <label asp-for="CreatedAt" class="col-form-label"></label>
+                            </div>
+                            <div class="col-5">
+                                <input asp-for="CreatedAt" readonly class="form-control" />
+                                <span class="text-danger" asp-validation-for="CreatedAt"></span>
+                            </div>
+                        </div>
 
 
-        <div class="form-group row">
-            <div class="col-5 offset-2">
-                <partial name="_DeleteAndBackToListButtonsPartial" />
+                        <div class="form-group row">
+                            <div class="col-5 offset-2">
+                                <partial name="_DeleteAndBackToListButtonsPartial" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+              </div>
             </div>
         </div>
     </div>
-</form>
-
 
 
 

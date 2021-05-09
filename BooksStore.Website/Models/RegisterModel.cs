@@ -9,8 +9,9 @@ namespace BooksStore.Website.Data.Entity
     public class RegisterModel
     {
         [Required]
-        [EmailAddress]
+
         public string Name { get; set; }
+        [EmailAddress]
         public string Email { get; set; }
         [Required]
         [DataType(DataType.Password)]

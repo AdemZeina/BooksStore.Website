@@ -1,76 +1,84 @@
 ﻿@model Book
 @{
+    ViewData["Page"] = "Books";
     ViewData["Title"] = "Details";
 }
 
-<br />
-<h2 class="text-info">Book Details</h2>
-<br />
-<div class="whiteBackground border">
-    <div class="form-group row">
-        <div class="col-2">
-            <label asp-for="Title" class="col-form-label"></label>
+<div class="col-xl-12 col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <h5>Book Details</h5>
         </div>
-        <div class="col-5">
-            <input asp-for="Title" readonly class="form-control" />
-        </div>
-    </div>
-    <div class="form-group row">
-        <div class="col-2">
-            <label asp-for="Description" class="col-form-label"></label>
-        </div>
-        <div class="col-5">
-            <input asp-for="Description" readonly class="form-control" />
-        </div>
-    </div>
-    <div class="form-group row">
-        <div class="col-2">
-            <label asp-for="Content" class="col-form-label"></label>
-        </div>
-        <div class="col-5">
-            <input asp-for="Content" readonly class="form-control" />
-        </div>
-    </div>
-    <div class="form-group row">
-        <div class="col-2">
-            <label asp-for="Price" class="col-form-label"></label>
-        </div>
-        <div class="col-5">
-            <input asp-for="Price" readonly class="form-control" />
-        </div>
-    </div>
-    <div class="form-group row">
-        <div class="col-2">
-            <label asp-for="Author" class="col-form-label"></label>
-        </div>
-        <div class="col-5">
-            <input asp-for="Author" readonly class="form-control" />
-        </div>
-    </div>
-    <div class="form-group row">
-        <div class="col-2">
-            <label asp-for="ReadCount" class="col-form-label"></label>
-        </div>
-        <div class="col-5">
-            <input asp-for="ReadCount" readonly class="form-control" />
-        </div>
-    </div><div class="form-group row">
-        <div class="col-2">
-            <label asp-for="CreatedAt" class="col-form-label"></label>
-        </div>
-        <div class="col-5">
-            <input asp-for="CreatedAt" readonly class="form-control" />
-        </div>
-    </div>
+        <div class="card-block">
+            <div class="">
+                <div class="whiteBackground border">
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="Title" class="col-form-label"></label>
+                        </div>
+                        <div class="col-5">
+                            <input asp-for="Title" readonly class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="Description" class="col-form-label"></label>
+                        </div>
+                        <div class="col-5">
+                            <input asp-for="Description" readonly class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="Content" class="col-form-label"></label>
+                        </div>
+                        <div class="col-5">
+                            <input asp-for="Content" readonly class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="Price" class="col-form-label"></label>
+                        </div>
+                        <div class="col-5">
+                            <input asp-for="Price" readonly class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="Author" class="col-form-label"></label>
+                        </div>
+                        <div class="col-5">
+                            <input asp-for="Author" readonly class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="ReadCount" class="col-form-label"></label>
+                        </div>
+                        <div class="col-5">
+                            <input asp-for="ReadCount" readonly class="form-control" />
+                        </div>
+                    </div><div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="CreatedAt" class="col-form-label"></label>
+                        </div>
+                        <div class="col-5">
+                            <input asp-for="CreatedAt" readonly class="form-control" />
+                        </div>
+                    </div>
 
 
-    <div class="form-group row">
-        <div class="col-5 offset-2">
-            <partial name="_EditAndBackToListButtonsPartial" model="@Model.Id" />
+                    <div class="form-group row">
+                        <div class="col-5 offset-2">
+                            <partial name="_EditAndBackToListButtonsPartial" model="@Model.Id" />
+                        </div>
+                    </div>
+                </div>
+               </div>
+            </div>
         </div>
     </div>
-</div>
-
 
 
 

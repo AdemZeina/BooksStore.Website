@@ -1,19 +1,25 @@
 ﻿using BooksStore.Website.Data.Entity;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace BooksStore.Website.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private async Task<ApplicationUser> GetCurrentUserAsync()
+        {
+            return await _userManager.GetUserAsync(HttpContext.User);
+        }
 
-        public AccountController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+        public AccountController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -22,6 +28,10 @@ namespace BooksStore.Website.Controllers
         [HttpGet]
         public IActionResult Login()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -33,7 +43,13 @@ namespace BooksStore.Website.Controllers
                 var result = await _signInManager.PasswordSignInAsync(user.Email, user.Password, true, false);
 
                 if (result.Succeeded)
-                {
+                {                  
+                    var currentUser = await _userManager.FindByEmailAsync(user.Email);
+                    var userId = currentUser?.Id;
+                    await _userManager.AddClaimAsync(currentUser, new Claim("UserId", userId));
+                    var claimsPrincipal = await _signInManager.CreateUserPrincipalAsync(currentUser);
+                    await _signInManager.RefreshSignInAsync(currentUser);
+
                     return RedirectToAction("Index", "Home");
                 }
 
@@ -54,12 +70,12 @@ namespace BooksStore.Website.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser
+                var user = new ApplicationUser
                 {
                     UserName = model.Email,
                     Email = model.Email,
                 };
-
+                user.Id = Guid.NewGuid().ToString();
                 var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
